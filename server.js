@@ -3,7 +3,7 @@ const server = express();
 //const fetch = require('node-fetch');
 const translate = require('@iamtraction/google-translate');
 const { Configuration, OpenAIApi } = require("openai");
-const Hangbot = require('./hangbot.js')
+//const Hangbot = require('./hangbot.js')
 //const Tesseract = require('tesseract.js');
 
 
