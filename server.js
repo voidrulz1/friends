@@ -2190,6 +2190,12 @@ CountryCode : ${countryCode}`
           case 2:
             this.setAccountColor();
 
+            
+                        if (message.toLowerCase() == ("p")) {
+              this.sendRoomMsg(room, "p");
+            }
+            
+            
             if (message.toLowerCase() == (".rn") || message.toLowerCase() == (".resetnews")) {
 
               allOffset = "";
