@@ -7,15 +7,16 @@ const { Configuration, OpenAIApi } = require("openai");
 //const Tesseract = require('tesseract.js');
 
 
-server.all('/', (req, res) => {
-  res.send('<h2>Server is ready!</h2>');
-});
+const port = process.env.PORT || 3001;
 
+// server.all('/', (req, res) => {
+//   res.send('<h2>Server is ready!</h2>');
+// });
+
+server.get("/", (req, res) => res.type('html').send('<h2>Server is ready!</h2>));
 
 module.exports = () => {
-  server.listen(80, () => {
-    console.log('Server Ready.');
-  });
+server.listen(port, () => console.log(`Example app listening on port ${port}!`));
   return true;
 }
 
