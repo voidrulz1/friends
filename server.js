@@ -13,7 +13,7 @@ server.all('/', (req, res) => {
 
 
 module.exports = () => {
-  server.listen(1000, () => {
+  server.listen(80, () => {
     console.log('Server Ready.');
   });
   return true;
