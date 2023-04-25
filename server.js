@@ -2187,7 +2187,7 @@ CountryCode : ${countryCode}`
                 //return;
               } else {
 
-                this.sendRoomMsg(roomName, this.targetId + " : please wait while we process your request..");
+                this.sendRoomMsg(this.tempRoom, this.targetId + " : please wait while we process your request..");
                 this.sendSong(searchQuery, this.tempRoom);
 
 
