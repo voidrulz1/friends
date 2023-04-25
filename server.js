@@ -11,10 +11,6 @@ server.all('/', (req, res) => {
   res.send('<h2>Server is ready!</h2>');
 });
 
-server.get('/records.js', function(req, res) {
-  res.sendFile(__dirname + "/records.js");
-});
-
 
 module.exports = () => {
   server.listen(1000, () => {
