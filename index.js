@@ -9,8 +9,8 @@ const Monitor = require('ping-monitor');
 keepAlive();
 
 const monitor = new Monitor({
-  website: 'https://friends.voidrulz.repl.co',
-  title: 'NAME',
+  website: 'https://t-z2zk.onrender.com',
+  title: 'render',
   interval: 3
 });
 
