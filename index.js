@@ -15,31 +15,43 @@ const monitor = new Monitor({
 });
 
 monitor.on('up', (res) => {
+  try{
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + ' ' + time;
   //console.log(`${res.website} its on. - ${dateTime}`);
+  }
+  catch{}
 })
 monitor.on('down', (res) => {
+  try{
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + ' ' + time;
   console.log(`${res.website} it has died - ${res.statusMessage} - ${dateTime}`);
+  }
+  catch{}
 })
 monitor.on('stop', (website) => {
+  try{
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + ' ' + time;
   console.log(`${website} has stopped. - ${dateTime}`)
+  }
+  catch{}
 });
 monitor.on('error', (error) => {
+  try{
   var today = new Date();
   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + ' ' + time;
   console.log(error + " - " + dateTime)
-});
+  }
+  catch{}
+  });
 
