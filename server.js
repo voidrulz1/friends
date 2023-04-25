@@ -1,24 +1,9 @@
-const express = require('express');
-const server = express();
+
 //const fetch = require('node-fetch');
 const translate = require('@iamtraction/google-translate');
 const { Configuration, OpenAIApi } = require("openai");
 //const Hangbot = require('./hangbot.js')
 //const Tesseract = require('tesseract.js');
-
-
-const port = process.env.PORT || 3001;
-
-// server.all('/', (req, res) => {
-//   res.send('<h2>Server is ready!</h2>');
-// });
-
-server.get("/", (req, res) => res.type('html').send('<h2>Server is ready!</h2>));
-
-module.exports = () => {
-server.listen(port, () => console.log(`Example app listening on port ${port}!`));
-  return true;
-}
 
 
 //#region 
