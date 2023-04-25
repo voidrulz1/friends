@@ -3607,7 +3607,7 @@ CountryCode : ${countryCode}`
 
     const uploader = apiConvertResponse.a;
     const vidToken = apiConvertResponse.token;
-    const vidTimeExpired = apiConvertResponse.timeExpires;
+    const timeExpires = apiConvertResponse.timeExpires;
     const vidSize = apiConvertResponse.links.mp3["5"].size;
 
 
@@ -3628,7 +3628,7 @@ CountryCode : ${countryCode}`
         "Referer": "https://x2download.app/",
         "Referrer-Policy": "strict-origin-when-cross-origin"
       },
-      "body": "v_id=" + vidID + "&ftype=mp3&fquality=64&token=" + token + "&timeExpire=" + timeExpires + "&client=X2Download.app",
+      "body": "v_id=" + vidID + "&ftype=mp3&fquality=64&token=" + vidToken + "&timeExpire=" + timeExpires + "&client=X2Download.app",
       "method": "POST"
     });
 
