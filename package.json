@@ -22,7 +22,6 @@
     "openai": "^3.2.1",
     "ping-monitor": "^0.6.2",
     "request": "^2.88.2",
-    "translate-g": "^0.0.1",
     "truecallerjs": "^1.1.5",
     "urban": "^0.3.4",
     "ws": "^8.11.0",
