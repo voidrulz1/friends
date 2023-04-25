@@ -1,5 +1,5 @@
 
-//const fetch = require('node-fetch');
+const fetch = require('node-fetch');
 //const translate = require('@iamtraction/google-translate');
 const { Configuration, OpenAIApi } = require("openai");
 //const Hangbot = require('./hangbot.js')
