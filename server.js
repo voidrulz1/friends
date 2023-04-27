@@ -1,5 +1,6 @@
 const express = require('express');
 const server = express();
+require('dotenv').config()
 //const fetch = require('node-fetch');
 //const translate = require('@iamtraction/google-translate');
 const { Configuration, OpenAIApi } = require("openai");
