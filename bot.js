@@ -375,9 +375,9 @@ var Client = /** @class */ (function () {
         var TrRoomsArr = [];
         var TrRoomsArrWLM = [];
         var TrAllRoomsUsers = [];
-        publicRoomsArr = [];
-        usersList = [];
-        colorCodesArray = [];
+        //publicRoomsArr = [];
+        //usersList = [];
+        //colorCodesArray = [];
         // this.shareSongMap.clear();
         // this.playedRecently.clear();
         // this.myloveRecently.clear();
