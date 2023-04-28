@@ -1,32 +1,34 @@
-const express = require('express');
-const server = express();
+"use strict";
+
 require('dotenv').config()
+
 //const fetch = require('node-fetch');
-//const translate = require('@iamtraction/google-translate');
-const { Configuration, OpenAIApi } = require("openai");
 //const Hangbot = require('./hangbot.js')
 //const Tesseract = require('tesseract.js');
+//const translate = require('@iamtraction/google-translate');
 
+const { Configuration, OpenAIApi } = require("openai");
 
-server.all('/', (req, res) => {
-  res.send('<h2>Server is ready!</h2>');
+var FormData = require('form-data');
+const request = require('request');
+var WebSocket = require("ws");
+const fs = require("fs");
+const readline = require("readline");
+const { triggerAsyncId } = require("async_hooks");
+var yt = require("youtube-search-without-api-key");
+var Scraper = require("images-scraper");
+var urban = require("urban");
+var googleTTS = require("google-tts-api");
+var gis = require("g-i-s");
+var google = new Scraper({
+  puppeteer: {
+    headless: false,
+  },
 });
-
-server.get('/records.js', function(req, res) {
-  res.sendFile(__dirname + "/records.js");
-});
-
-
-module.exports = () => {
-  server.listen(1000, () => {
-    console.log('Server Ready.');
-  });
-  return true;
-}
 
 
 //#region 
-"use strict";
+
 var __awaiter =
   (this && this.__awaiter) ||
   function(thisArg, _arguments, P, generator) {
@@ -173,22 +175,7 @@ var __spreadArray =
 exports.__esModule = true;
 exports.Client = void 0;
 
-var FormData = require('form-data');
-const request = require('request');
-var WebSocket = require("ws");
-const fs = require("fs");
-const readline = require("readline");
-const { triggerAsyncId } = require("async_hooks");
-var yt = require("youtube-search-without-api-key");
-var Scraper = require("images-scraper");
-var urban = require("urban");
-var googleTTS = require("google-tts-api");
-var gis = require("g-i-s");
-var google = new Scraper({
-  puppeteer: {
-    headless: false,
-  },
-});
+
 
 //var message = "";
 //======================= Random generator ===========================//
