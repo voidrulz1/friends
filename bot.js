@@ -228,11 +228,9 @@ function generateString(length) {
 
 //#region  variable and imports
 
-var BOT_ID = "◦•●◉✿ǫᴜᴇᴇɴ✿◉●•◦"; // Bot ID
-//var BOT_ID = "girlfriend"; // Bot ID
-var BOT_PASSWORD = "bot345"; // Password
-//var BOT_ID = "aunty"; // Bot ID
-//var BOT_PASSWORD = "bot345"; // Password
+var BOT_ID = process.env.BOT_ID; // Bot ID
+var BOT_PASSWORD = process.env.BOT_PWD; // Password
+
 var HANDLER_LOGIN = "login";
 var HANDLER_LOGIN_EVENT = "login_event";
 var HANDLER_ROOM_JOIN = "room_join";
