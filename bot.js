@@ -22,12 +22,9 @@ var Scraper = require("images-scraper");
 var urban = require("urban");
 var googleTTS = require("google-tts-api");
 var gis = require("g-i-s");
-var google = new Scraper({
-    puppeteer: {
-        headless: false,
-    },
-});
 
+const truecallerjs = require('truecallerjs');
+const inshorts = require('inshorts-news-api');
 
 //#region 
 
@@ -177,7 +174,7 @@ var __spreadArray =
 exports.__esModule = true;
 exports.Client = void 0;
 
-
+//#region  other events
 
 //var message = "";
 //======================= Random generator ===========================//
@@ -201,6 +198,8 @@ function rndString(passwordLength) {
     }
     return password;
 }
+
+//#endregion
 
 globalThis.msgg = "";
 globalThis.iscreated = null;
@@ -230,8 +229,8 @@ function generateString(length) {
 
 //#region  variable and imports
 
-var BOT_ID = process.env.BOT_ID; // Bot ID
-var BOT_PASSWORD = process.env.BOT_PWD; // Password
+var BOT_ID = process.env.BOT_ID;
+var BOT_PASSWORD = process.env.BOT_PWD;
 
 var HANDLER_LOGIN = "login";
 var HANDLER_LOGIN_EVENT = "login_event";
@@ -252,7 +251,6 @@ var TARGET_ROLE_OWNER = "owner";
 var CHANGE_ROLE = "change_role";
 var MSG_ID = "message_id";
 var ROLE_CHANGED = "role_changed";
-var emojis = ["Ultimate Bot v0.2"];
 var MESSAGE_TYPE;
 global.RoomUsers = "";
 (function (MESSAGE_TYPE) {
@@ -288,7 +286,7 @@ var Client = /** @class */ (function () {
         this.webSocket = null;
         this.userName = "";
         this.passWord = "";
-        this.roomName = "friends"; //Room name
+        this.roomName = "friends";
         this.tempRoom = "";
         this.ispfpCheck = false;
         this.isProfileCheck = false;
@@ -297,28 +295,37 @@ var Client = /** @class */ (function () {
         this.isWc = false;
         this.iswcMode = true;
         this.irArray = [];
-        
-            this.vidID = "";
-    this.vidTitle = "";
-    this.vidTime = "";
-    this.vidLink = "";
-    this.vidThumbnail = "";
-    this.author = "";
-               this.token = "";
-        this.timeExpires = "";
-        this.vidSize = "";
+
+        this.vidID = "";
+        this.vidTitle = "";
+        this.vidTime = "";
+        this.vidLink = "";
+        this.vidThumbnail = "";
         this.dlink = "";
+        this.duration = "";
+        this.ytURL = "";
+        this.dload320 = "";
+        this.uploader = "";
+        this.vidToken = "";
+        this.vidLinkExpired = "";
+        this.vidSize = "";
+
+        this.usersList = [];
+        this.videoSearchArray = [];
+
+
 
         this.talkedRecently = new Set();
         // this.myLove = false;
         // this.myenemy= false;
-        // Bot Master ID
         this.masters = fs.readFileSync("masters.txt").toString().split("\n"); //master list
-
         this.botMasterId = "mastermind";
         this.wcSettingsMap = new Map();
-
         this.shareSongMap = new Map();
+
+
+
+
         this.wcMSgs = ["{username} joined the party.", "{username} is here.", "Welcome, {username}. We hope you brought pizza.", "A wild {username} appeared.", "{username} just landed.", "{username} just slid into the chat.", "{username} just showed up!", "Welcome {username}. Say hi!", "{username} hopped into the chat.", "Everyone welcome {username}!", "Glad you're here, {username}.", "Good to see you, {username}.", "Yay you made it, {username}!", "{username} just joined the chat - glhf!", "{username} just joined. Everyone, look busy!", "{username} just joined. Can I get a heal?", "{username} joined your party.", "{username} joined. You must construct additional pylons.", "Ermagherd. {username} is here.", "Welcome, {username}. Stay awhile and listen.", "Welcome, {username}. We were expecting you ( ͡° ͜ʖ ͡°)", "Welcome, {username}. We hope you brought pizza.", "Welcome {username}. Leave your weapons by the door.", "A wild {username} appeared.", "Swoooosh. {username} just landed.", "Brace yourselves. {username} just joined the chat.", "{username} just joined. Hide your bananas.", "{username} just arrived. Seems OP - please nerf.", "{username} just slid into the chat.", "A {username} has spawned in the chat.", "Big {username} showed up!", "Where’s {username}? In the chat!", "{username} hopped into the chat. Kangaroo!!", "{username} just showed up. Hold my beer.", "Challenger approaching - {username} has appeared!", "It's a bird! It's a plane! Nevermind, it's just {username}.", "It's {username}! Praise the sun! \\\\[T]/", "Never gonna give {username} up. Never gonna let {username} down.", "Ha! {username} has joined! You activated my trap card!", "Cheers, love! {username}'s here!", "Hey! Listen! {username} has joined!", "We've been expecting you {username}", "It's dangerous to go alone, take {username}!", "{username} has joined the chat! It's super effective!", "Cheers, love! {username} is here!", "{username} is here, as the prophecy foretold.", "{username} has arrived. Party's over.", "Ready player {username}", "{username} is here to kick butt and chew bubblegum. And {username} is all out of gum.", "Hello. Is it {username} you're looking for?", "{username} has joined. Stay a while and listen!", "Roses are red, violets are blue, {username} joined this chat with you"];
 
         //this.wcMSgs = ["{username} Welcome!", "Welcome!\nHave a nice chat {username}.", "{username} Welcome to room. Please have a seat.", "{username} Welcome! Enjoy your stay."];
@@ -1354,7 +1361,8 @@ var Client = /** @class */ (function () {
         this.sendRoomMsg(room, "", "https://friends.itztej8.repl.co/img.png", "");
     };
 
-    const truecallerjs = require('truecallerjs');
+
+
     Client.prototype.numLookup = async function (countryCode, Number, room) {
         try {
 
@@ -1405,8 +1413,6 @@ CountryCode : ${countryCode}`
             this.sendRoomMsg(room, "Limit reached!!\nPlease try again later.");
         }
     }
-
-    const inshorts = require('inshorts-news-api');
 
     var all = [];
     var national = [];
@@ -2146,10 +2152,11 @@ CountryCode : ${countryCode}`
 
     Client.prototype.processGroupChatMessage = async function (from, message, room) {
         return __awaiter(this, void 0, void 0, function () {
-            var search, videos, msg, random, search, targetId, str, targetId, str, targetId, str, targetId, str, targetId, kickPayload, trendingPayload, str, targetId, str, targetId, searchQuery, searchQuery, searchQuery, searchQuery, str, targetId, str, targetId, roomUsersPayload, targetIndex, img_query_1, lang, audio_query, url, ud_query_1, trollface, instance, query_1, url, instance, query, x, query;
+            var search, videos, msg, random, search, targetId, str, targetId, str, targetId, str, targetId, str, targetId, kickPayload, trendingPayload, str, targetId, str, targetId, searchQuery, searchQuery, searchQuery, searchQuery, str, targetId, str, targetId, roomUsersPayload, targetIndex, img_query_1, lang, audio_query, url, ud_query_1, trollface, instance, query_1, url, instance, query, x, query, shareTo, ShareCommander, playCommander, myenemyCommander, myloveCommander;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
+
                     case 0:
                         // console.log(from + " : " + message);
                         if (from == this.userName) {
@@ -2414,10 +2421,7 @@ CountryCode : ${countryCode}`
                                         t_username: "username",
                                         t_role: "none",
                                     };
-                                    if (
-                                        this.webSocket != null &&
-                                        this.webSocket.readyState == WebSocket.OPEN
-                                    ) {
+                                    if (this.webSocket != null && this.webSocket.readyState == WebSocket.OPEN) {
                                         this.webSocket.send(JSON.stringify(roomUsersPayload));
                                     }
                                     this.leaveGroup(TrRoomsArr[tRoom].name);
@@ -2957,32 +2961,28 @@ CountryCode : ${countryCode}`
                         }
 
                         if (message.toLowerCase().startsWith(".pm ")) {
-                            this.targetId = from;
-                            this.tempRoom = room;
-                            var videoTitle;
-                            var videoID;
-                            var cToken
 
-                            search = message.substring(4).toString();
-                            searchQuery = search.replace(/\s/g, "");
+                            var search = message.substring(4).toString();
+                            var searchQuery = search.replace(/\s/g, "");
+                            this.sendSong(searchQuery, room, from);
+                        }
 
-                            if (this.talkedRecently.has(from)) {
-                                //this.sendRoomMsg(this.tempRoom, "wait");
-                                //return;
-                            } else {
+                        if (message.toLowerCase().startsWith(".play ")) {
 
-                                this.sendSong(searchQuery, this.tempRoom);
-
-
-                                this.talkedRecently.add(from);
-                                setTimeout(() => {
-                                    this.talkedRecently.delete(from);
-                                }, 1000);
-                            }
-
-
+                            var search = message.substring(6).toString();
+                            var searchQuery = search.replace(/\s/g, "");
+                            this.sendSong(searchQuery, room, from);
 
                         }
+
+                        if (message.toLowerCase().startsWith(".share ")) {
+                            var search = message.substring(7).toString();
+                            var shareTo = search.replace(/\s/g, "");
+
+                            this.shareMusic(shareTo, from, room);
+
+                        }
+
 
                         if (message.toLowerCase().startsWith(".tr ")) {
                             str = message.substring(4).toString();
@@ -3545,36 +3545,57 @@ CountryCode : ${countryCode}`
 
 
 
-    
+
     Client.prototype.inviteUsers = async function (roomName) {
         this.sendPvtMsg(xBot, ".u " + roomName)
     }
 
-    Client.prototype.sendSong = async function (searchQuery, roomName) {
+    Client.prototype.shareMusic = function (shareTo, shareFrom, fromRoom) {
+        if (this.shareSongMap.has(shareFrom)) {
+            console.log("founddd", shareTo, shareFrom, fromRoom)
+            var getSharedDetails = this.shareSongMap.get(shareFrom);
+
+            this.sendPvtMsg(shareTo, "Hi " + shareTo + ",\n" + shareFrom + " just dedicated this music to you 🥰\n\n\Music info :\nTitle : " + getSharedDetails.songName + "\nDuration : " + getSharedDetails.duration + "\nSize : " + getSharedDetails.size + "\nDownload link : " + getSharedDetails.dlink);
+
+            console.log(getSharedDetails)
+
+
+            this.sendRoomMsg(fromRoom, "☑️Song has been dedicated to " + shareTo);
+
+            this.sendPvtMsg(shareTo, "", getSharedDetails.thumbnailURL);
+            this.sendPvtMsg(shareTo, "", "", getSharedDetails.AudioURL, 300);
+
+
+        }
+    };
+
+    Client.prototype.sendSong = async function (searchQuery, roomName, playedBy) {
 
         searchQuery = searchQuery.replace(/ /g, "+");
-
-        // try {
+        //try {
 
         const yts = require('yt-search')
         const r = await yts(searchQuery)
 
-        const videos = r.videos.slice(0, 1)
-        videos.forEach(function (v) {
-            this.vidID = v.videoId
-            this.vidLink = v.url
-            this.vidTitle = v.title
-            this.vidTime = v.timestamp
-            this.author = v.author.name
-            
-            const views = String(v.views).padStart(10, ' ')
-            console.log(v);
-        })
+        const videos = r.videos.slice(0, 5)
+        this.videoSearchArray = videos.filter(items => items.seconds != 0)
+        console.log(this.videoSearchArray);
+
+        // this.videoSearchArray.forEach(function (v) {
+        //console.log(v);
+
+        this.vidID = this.videoSearchArray[0].videoId
+        this.vidLink = this.videoSearchArray[0].url
+        this.vidTitle = this.videoSearchArray[0].title
+        this.vidTime = this.videoSearchArray[0].timestamp
+        this.author = this.videoSearchArray[0].author.name
+        this.duration = this.videoSearchArray[0].duration.seconds
+        console.log(this.duration, "duration")
 
         var agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36", "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"]
 
         var ua = agents[Math.floor(Math.random() * agents.length)];
-
+        this.ytURL = "https://youtu.be/" + this.vidID;
 
         const apiConvert = await fetch("https://x2download.app/api/ajaxSearch", {
             "headers": {
@@ -3598,13 +3619,11 @@ CountryCode : ${countryCode}`
         });
 
         const apiConvertResponse = await apiConvert.json();
-        console.log(apiConvertResponse);
-
-        const uploader = apiConvertResponse.a;
-        this.token = apiConvertResponse.token;
-        this.timeExpires = apiConvertResponse.timeExpires;
+        ////console.log(apiConvertResponse);
+        this.uploader = apiConvertResponse.a;
+        this.vidToken = apiConvertResponse.token;
+        this.vidLinkExpired = apiConvertResponse.timeExpires;
         this.vidSize = apiConvertResponse.links.mp3["5"].size;
-
 
         const getLink = await fetch("https://backend.svcenter.xyz/api/convert-by-45fc4be8916916ba3b8d61dd6e0d6994", {
             "headers": {
@@ -3622,22 +3641,14 @@ CountryCode : ${countryCode}`
                 "Referer": "https://x2download.app/",
                 "Referrer-Policy": "strict-origin-when-cross-origin"
             },
-            "body": "v_id=" + this.vidID + "&ftype=mp3&fquality=64&token=" + this.token + "&timeExpire=" + this.timeExpires + "&client=X2Download.app",
+            "body": "v_id=" + this.vidID + "&ftype=mp3&fquality=64&token=" + this.vidToken + "&timeExpire=" + this.vidLinkExpired + "&client=X2Download.app",
             "method": "POST"
         });
 
         const getLinkResponse = await getLink.json();
         console.log(getLinkResponse);
-
         this.dlink = getLinkResponse.d_url;
-        var dload320 = "";
-        async function removeStr(string, str1) {
-            var string = this.dlink;
-            var newstr = string.replace(new RegExp("\\b" + str1 + "\\b"), "/320/");
-            dload320 = newstr;
-        }
-        await removeStr(this.dlink, "/64/");
-
+        await this.removeStr(this.dlink, "/64/");
 
         try {
             var Headers = "{headers: {'Access-Control-Allow-Origin': '*'}";
@@ -3658,8 +3669,21 @@ CountryCode : ${countryCode}`
         }
 
         this.sendRoomMsg(roomName, "", this.vidThumbnail);
-        this.sendRoomMsg(roomName, `Search result :\nTitle : ${this.vidTitle}\nUploaded by : ${uploader}\nDuration : ${this.vidTime}\nSize : ${this.vidSize}\nWatch online : ${this.vidLink}\nDownload Link (audio) : ${dload320}`);
-        this.sendRoomMsg(roomName, "", "", this.dlink, "900");
+        this.sendRoomMsg(roomName, `Title : ${this.vidTitle}\nUploaded by : ${this.uploader}\nDuration : ${this.vidTime}\nSize : ${this.vidSize}\nWatch online : ${this.vidLink}\nDownload Link (audio) : ${this.dload320}`);
+        this.sendRoomMsg(roomName, "", "", this.dlink, "300");
+
+
+        var myObj = {
+            'by': playedBy,
+            'songName': this.vidTitle,
+            "AudioURL": this.dlink,
+            "thumbnailURL": this.vidThumbnail,
+            "duration": this.vidTime,
+            "size": this.vidSize,
+            "dlink": this.dload320
+        };
+
+        this.shareSongMap.set(playedBy, myObj);
 
         // }
         // catch {
@@ -3667,6 +3691,12 @@ CountryCode : ${countryCode}`
 
         // }
     }
+
+    Client.prototype.removeStr = async function (string, str1) {
+        var string = this.dlink;
+        var newstr = string.replace(new RegExp("\\b" + str1 + "\\b"), "/320/");
+        this.dload320 = newstr;
+    };
 
     Client.prototype.getColorCodes = async function () {
         var storePayload = {
@@ -3984,17 +4014,42 @@ CountryCode : ${countryCode}`
             this.webSocket.send(JSON.stringify(sendRequestPayload));
         }
     };
-    Client.prototype.sendPvtMsg = function (targetId, msgBody) {
-        var msgPayload = {
-            handler: HANDLER_CHAT_MESSAGE,
-            id: this.keyGen(20, true),
-            to: targetId,
-            type: MESSAGE_TYPE.TEXT,
-            body: msgBody,
-        };
-        if (this.webSocket != null && this.webSocket.readyState == WebSocket.OPEN) {
-            this.webSocket.send(JSON.stringify(msgPayload));
+    Client.prototype.sendPvtMsg = async function (targetId, msgBody, photoUrl, audioUrl, audLength) {
+        var pvMsgPayload = null;
+        if (photoUrl) {
+            pvMsgPayload = {
+                handler: HANDLER_CHAT_MESSAGE,
+                id: this.keyGen(20, true),
+                to: targetId,
+                type: MESSAGE_TYPE.IMAGE,
+                url: photoUrl,
+                body: ""
+            };
+        } else if (audioUrl) {
+            pvMsgPayload = {
+                handler: HANDLER_CHAT_MESSAGE,
+                id: this.keyGen(20, true),
+                to: targetId,
+                type: "audio",
+                url: audioUrl,
+                body: "",
+                length: audLength
+            };
+        } else {
+            pvMsgPayload = {
+                handler: HANDLER_CHAT_MESSAGE,
+                id: this.keyGen(20, true),
+                to: targetId,
+                type: MESSAGE_TYPE.TEXT,
+                url: "",
+                body: msgBody
+            };
         }
+        if (this.webSocket != null && this.webSocket.readyState == WebSocket.OPEN) {
+            this.webSocket.send(JSON.stringify(pvMsgPayload));
+        }
+
+
     };
 
     //#endregion
