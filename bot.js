@@ -297,6 +297,13 @@ var Client = /** @class */ (function () {
         this.isWc = false;
         this.iswcMode = true;
         this.irArray = [];
+        
+            this.vidID = "";
+    this.vidTitle = "";
+    this.vidTime = "";
+    this.vidLink = "";
+    this.vidThumbnail = "";
+    this.author = "";
 
         this.talkedRecently = new Set();
         // this.myLove = false;
@@ -3533,12 +3540,8 @@ CountryCode : ${countryCode}`
     };
 
 
-    var vidID = "";
-    var vidTitle = "";
-    var vidTime = "";
-    var vidLink = "";
-    var vidThumb = "";
-    var vidThumbnail = "";
+
+    
     Client.prototype.inviteUsers = async function (roomName) {
         this.sendPvtMsg(xBot, ".u " + roomName)
     }
@@ -3555,14 +3558,13 @@ CountryCode : ${countryCode}`
         const videos = r.videos.slice(0, 1)
         videos.forEach(function (v) {
             vidID = v.videoId
-            ytURL = v.url
+            vidLink = v.url
             vidTitle = v.title
-            var timestamp = v.timestamp
-            var author = v.author.name
-            console.log(author);
+            vidTime = v.timestamp
+            author = v.author.name
+            
             const views = String(v.views).padStart(10, ' ')
             console.log(v);
-            console.log(`${views} | ${v.title} (${v.timestamp}) | ${v.author.name}`)
         })
 
         var agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36", "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"]
