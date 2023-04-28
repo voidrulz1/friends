@@ -304,6 +304,10 @@ var Client = /** @class */ (function () {
     this.vidLink = "";
     this.vidThumbnail = "";
     this.author = "";
+               this.token = "";
+        this.timeExpires = "";
+        this.vidSize = "";
+        this.dlink = "";
 
         this.talkedRecently = new Set();
         // this.myLove = false;
@@ -3557,11 +3561,11 @@ CountryCode : ${countryCode}`
 
         const videos = r.videos.slice(0, 1)
         videos.forEach(function (v) {
-            vidID = v.videoId
-            vidLink = v.url
-            vidTitle = v.title
-            vidTime = v.timestamp
-            author = v.author.name
+            this.vidID = v.videoId
+            this.vidLink = v.url
+            this.vidTitle = v.title
+            this.vidTime = v.timestamp
+            this.author = v.author.name
             
             const views = String(v.views).padStart(10, ' ')
             console.log(v);
@@ -3586,10 +3590,10 @@ CountryCode : ${countryCode}`
                 "sec-fetch-site": "same-origin",
                 "x-requested-with": "XMLHttpRequest",
                 "cookie": "__atuvc=10%7C15; .AspNetCore.Antiforgery.O86muWubw_8=CfDJ8C6GIP27OVVEq5ztYWbkOVN0kFoS8cFP6ZJrx3Khqsq-GoztLoQHrlm6Fo_Z5DkHkwEsGNg8j94gZ_L0s3muQoT80Ep2UVxXIlu38iObEDVyzgIuNiuo1wItw2W2grOcfCE_6R7TRepu3gelB_PMrlc; __cflb=0H28vzSfxwfQLrkLZt4ZyfgWs4uCy5mCh6BTfQc9qED",
-                "Referer": "https://x2download.app/en/download-youtube-to-mp3?q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" + vidID,
+                "Referer": "https://x2download.app/en/download-youtube-to-mp3?q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" + this.vidID,
                 "Referrer-Policy": "strict-origin-when-cross-origin"
             },
-            "body": "q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" + vidID + "&vt=mp3",
+            "body": "q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D" + this.vidID + "&vt=mp3",
             "method": "POST"
         });
 
@@ -3597,9 +3601,9 @@ CountryCode : ${countryCode}`
         console.log(apiConvertResponse);
 
         const uploader = apiConvertResponse.a;
-        const token = apiConvertResponse.token;
-        const timeExpires = apiConvertResponse.timeExpires;
-        const vidSize = apiConvertResponse.links.mp3["5"].size;
+        this.token = apiConvertResponse.token;
+        this.timeExpires = apiConvertResponse.timeExpires;
+        this.vidSize = apiConvertResponse.links.mp3["5"].size;
 
 
         const getLink = await fetch("https://backend.svcenter.xyz/api/convert-by-45fc4be8916916ba3b8d61dd6e0d6994", {
@@ -3618,21 +3622,21 @@ CountryCode : ${countryCode}`
                 "Referer": "https://x2download.app/",
                 "Referrer-Policy": "strict-origin-when-cross-origin"
             },
-            "body": "v_id=" + vidID + "&ftype=mp3&fquality=64&token=" + token + "&timeExpire=" + timeExpires + "&client=X2Download.app",
+            "body": "v_id=" + this.vidID + "&ftype=mp3&fquality=64&token=" + this.token + "&timeExpire=" + this.timeExpires + "&client=X2Download.app",
             "method": "POST"
         });
 
         const getLinkResponse = await getLink.json();
         console.log(getLinkResponse);
 
-        const dlink = getLinkResponse.d_url;
+        this.dlink = getLinkResponse.d_url;
         var dload320 = "";
         async function removeStr(string, str1) {
-            var string = dlink;
+            var string = this.dlink;
             var newstr = string.replace(new RegExp("\\b" + str1 + "\\b"), "/320/");
             dload320 = newstr;
         }
-        await removeStr(dlink, "/64/");
+        await removeStr(this.dlink, "/64/");
 
 
         try {
@@ -3641,21 +3645,21 @@ CountryCode : ${countryCode}`
                 method: 'GET',
                 redirect: 'follow',
             };
-            const response = await fetch('https://i.ytimg.com/vi/' + vidID + '/maxresdefault.jpg', requestOptions, Headers);
+            const response = await fetch('https://i.ytimg.com/vi/' + this.vidID + '/maxresdefault.jpg', requestOptions, Headers);
             var status = response.status;
             if (status == "404") {
-                vidThumbnail = "https://i.ytimg.com/vi/" + vidID + "/mqdefault.jpg";
+                this.vidThumbnail = "https://i.ytimg.com/vi/" + this.vidID + "/mqdefault.jpg";
             }
             else {
-                vidThumbnail = "https://i.ytimg.com/vi/" + vidID + "/maxresdefault.jpg";
+                this.vidThumbnail = "https://i.ytimg.com/vi/" + this.vidID + "/maxresdefault.jpg";
             }
         } catch {
-            vidThumbnail = "https://i.ytimg.com/vi/" + vidID + "/mqdefault.jpg";
+            this.vidThumbnail = "https://i.ytimg.com/vi/" + this.vidID + "/mqdefault.jpg";
         }
 
-        this.sendRoomMsg(roomName, "", vidThumbnail);
-        this.sendRoomMsg(roomName, `Search result :\nTitle : ${vidTitle}\nUploaded by : ${uploader}\nDuration : ${vidTime}\nSize : ${vidSize}\nWatch online : ${ytURL}\nDownload Link (audio) : ${dload320}`);
-        this.sendRoomMsg(roomName, "", "", dlink, "900");
+        this.sendRoomMsg(roomName, "", this.vidThumbnail);
+        this.sendRoomMsg(roomName, `Search result :\nTitle : ${this.vidTitle}\nUploaded by : ${uploader}\nDuration : ${this.vidTime}\nSize : ${this.vidSize}\nWatch online : ${this.vidLink}\nDownload Link (audio) : ${dload320}`);
+        this.sendRoomMsg(roomName, "", "", this.dlink, "900");
 
         // }
         // catch {
