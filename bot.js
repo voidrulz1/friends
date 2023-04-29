@@ -2965,6 +2965,7 @@ CountryCode : ${countryCode}`
 
                             var search = message.substring(4).toString();
                             var searchQuery = search.replace(/\s/g, "");
+                            this.sendRoomMsg(room, from + ", please wait while we process your request..");
                             this.sendSong(searchQuery, room, from);
                         }
 
@@ -2972,6 +2973,7 @@ CountryCode : ${countryCode}`
 
                             var search = message.substring(6).toString();
                             var searchQuery = search.replace(/\s/g, "");
+                              this.sendRoomMsg(room, from + ", please wait while we process your request..");
                             this.sendSong(searchQuery, room, from);
 
                         }
