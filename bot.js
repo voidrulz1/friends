@@ -1246,7 +1246,25 @@ var Client = /** @class */ (function () {
             this.webSocket.send(JSON.stringify(nonePayload));
         }
     };
+    
+    Client.prototype.kickUser = function (targetId, roomName) {
+                                kickPayload = {
+                                    handler: HANDLER_ROOM_ADMIN,
+                                    id: this.keyGen(10, true),
+                                    type: TARGET_ROLE_KICK,
+                                    room: roomName,
+                                    t_username: targetId,
+                                    t_role: "none",
+                                };
+                                if (
+                                    this.webSocket != null &&
+                                    this.webSocket.readyState == WebSocket.OPEN
+                                ) {
+                                    this.webSocket.send(JSON.stringify(kickPayload));
+                                }
+                            
 
+    }
     var prompt = `Queen is a chatbot created by Aryan that talks like Human and she is girlfriend of Aryan, Queen and Aryan is going to marry on February 2nd 2024, Aryan is going to die in few months, he has some health problems. Honey is a girl with cold attitude. Sangya is a girl and she wants to be A teacher. Yuvika is a girl and good friend of Aryan, Yuvika's pet name is Kiwicrush. Skyfall is a girl and friend of Yuvika, who like to eat Biriyani and watch Netflix, she can also cook delicious biriyani. Anthelios is a guy who loves chat online, He can chat for whole night, He is a chats like parrot, He never sleeps so soon he will turn into a zombie.
 `
 
@@ -3320,25 +3338,32 @@ CountryCode : ${countryCode}`
                                 } else {
                                     if (targetIndex <= this.user_list.length) {
                                         //console.log(this.user_list[targetId-1]);
-                                        if (message.toLowerCase().substring(0, 2).trim() == ".a") {
+                                        if (message.toLowerCase().substring(0, 1).trim() == "a") {
                                             this.grantAdmin(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 2).trim() == ".o"
+                                            message.toLowerCase().substring(0, 1).trim() == "o"
                                         ) {
                                             this.grantOwner(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 2).trim() == ".m"
+                                            message.toLowerCase().substring(0, 1).trim() == "m"
                                         ) {
                                             this.grantMember(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 2).trim() == ".b"
+                                            message.toLowerCase().substring(0, 1).trim() == "b"
                                         ) {
                                             this.banUser(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 2).trim() == ".n"
+                                            message.toLowerCase().substring(0, 1).trim() == "n"
                                         ) {
                                             this.grantNone(this.user_list[targetIndex - 1], room);
                                         }
+                                         else if (
+                                            message.toLowerCase().substring(0, 1).trim() == "k"
+                                        )
+                                        {
+                                            this.kickUser(this.user_list[targetIndex - 1], room);
+                                        }
+                                        
                                     } else {
                                         //console.log("Invalid Input");
                                         this.setAccountColor();
