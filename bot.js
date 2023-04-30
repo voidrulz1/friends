@@ -134,7 +134,7 @@ var __generator =
                                 continue;
                             }
                             if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) {
-                                _.label = op[1];
+                                _.label = op[1]
                                 break;
                             }
                             if (op[0] === 6 && _.label < t[1]) {
@@ -1142,7 +1142,7 @@ var Client = /** @class */ (function () {
                                 }
                                 UsersArr1.push(parsedData.occupants[i].username);
                                 noDupe1 = Array.from(new Set(UsersArr1));
-                                msg_2 += i + ". " + parsedData.occupants[i].username + suffix;
+                                msg_2 += i + 1 + ". " + parsedData.occupants[i].username + suffix;
                             }
                             this.setAccountColor();
                             this.sendRoomMsg(parsedData.room, msg_2);
