@@ -3338,27 +3338,27 @@ CountryCode : ${countryCode}`
                                 } else {
                                     if (targetIndex <= this.user_list.length) {
                                         //console.log(this.user_list[targetId-1]);
-                                        if (message.toLowerCase().substring(0, 1).trim() == "a") {
+                                        if (message.toLowerCase().substring(0, 2).trim() == ".a") {
                                             this.grantAdmin(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 1).trim() == "o"
+                                            message.toLowerCase().substring(0, 2).trim() == ".o"
                                         ) {
                                             this.grantOwner(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 1).trim() == "m"
+                                            message.toLowerCase().substring(0, 2).trim() == ".m"
                                         ) {
                                             this.grantMember(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 1).trim() == "b"
+                                            message.toLowerCase().substring(0, 2).trim() == ".b"
                                         ) {
                                             this.banUser(this.user_list[targetIndex - 1], room);
                                         } else if (
-                                            message.toLowerCase().substring(0, 1).trim() == "n"
+                                            message.toLowerCase().substring(0, 2).trim() == ".n"
                                         ) {
                                             this.grantNone(this.user_list[targetIndex - 1], room);
                                         }
                                          else if (
-                                            message.toLowerCase().substring(0, 1).trim() == "k"
+                                            message.toLowerCase().substring(0, 2).trim() == ".k"
                                         )
                                         {
                                             this.kickUser(this.user_list[targetIndex - 1], room);
@@ -3366,7 +3366,7 @@ CountryCode : ${countryCode}`
                                         
                                     } else {
                                         //console.log("Invalid Input");
-                                        this.setAccountColor();
+                                        //this.setAccountColor();
                                         this.sendRoomMsg(room, "Invalid input!");
                                     }
                                 }
