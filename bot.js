@@ -285,8 +285,8 @@ var Client = /** @class */ (function () {
     function Client(user, pass) {
         this.URL = process.env.WS_ADDRESS;
         this.webSocket = null;
-        this.userName = "";
-        this.passWord = "";
+        this.userName = user;
+        this.passWord = pass;
         this.roomName = "friends";
         this.tempRoom = "";
         this.ispfpCheck = false;
@@ -351,8 +351,6 @@ var Client = /** @class */ (function () {
         // you can add more list of spins
 
         this.sL = "en";
-        this.userName = user;
-        this.passWord = pass;
         var headers = {
             headers: {
                 m: this.generateBuildInfo(),
@@ -371,10 +369,11 @@ var Client = /** @class */ (function () {
         this.webSocket.addEventListener('error', (event) => {
             try {
                 console.log('WebSocket error: ', event);
-                this.webSocket.close();
+                //this.webSocket.close();
                 this.clearAll();
                 setTimeout(function () {
-                    var client0 = new Client(BOT_ID, BOT_PASSWORD);
+                    var client0 = new Client(this.userName, this.passWord);
+                    return;
                 }, 30000);
 
             }
@@ -417,9 +416,10 @@ var Client = /** @class */ (function () {
     Client.prototype._onClose = async function (close) {
         this._log("ws: Socket closed");
         this.clearAll();
-        setTimeout(function () {
-            Client.prototype.login();
-        }, 10000);
+                        setTimeout(function () {
+                    var client0 = new Client(this.userName, this.passWord);
+                    return;
+                }, 60000);
     };
     Client.prototype._onPing = function (ping) {
         console.log("ping")
