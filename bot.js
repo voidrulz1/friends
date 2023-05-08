@@ -372,9 +372,9 @@ var Client = /** @class */ (function () {
                 //this.webSocket.close();
                 this.clearAll();
                 setTimeout(function () {
-                    var client0 = new Client(this.userName, this.passWord);
+                    var client30 = new Client(this.userName, this.passWord);
                     return;
-                }, 30000);
+                }, 5000);
 
             }
             catch {
@@ -419,7 +419,7 @@ var Client = /** @class */ (function () {
                         setTimeout(function () {
                     var client0 = new Client(this.userName, this.passWord);
                     return;
-                }, 60000);
+                }, 5000);
     };
     Client.prototype._onPing = function (ping) {
         console.log("ping")
